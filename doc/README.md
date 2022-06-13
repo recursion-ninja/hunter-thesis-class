@@ -9,7 +9,7 @@ Hunter Thesis
 This repository contains the [`hunterthesis.cls`][0] LaTeX document class.
 The class is a specialization of the general purpose [Clean Thesis][1] style, ([source code][2]).
 One of the aims of the design goals of `hunterthesis.cls` is providing and intuative and unobtrusive LaTeX template for masters students so that their cognative focus can remain on research and writing, not typesetting.
-The other, equally important design goal is compliance with the [Guidelines for Preparing Master's Theses in Arts & Sciences]
+The other, equally important design goal is compliance with the [Guidelines for Preparing Master's Theses in Arts & Sciences][3].
 
 
 ### Compliance
@@ -27,7 +27,7 @@ The `hunterthesis.cls` document class meets the following exhuastive list of gui
 
 ### Getting Started
 
-An outline of how to use the `hunterthesis.cls` document class is illistrated in the [`example`][5] directory.
+An outline of how to use the `hunterthesis.cls` document class is illistrated in the [`example`][4] directory.
 There is a `Makefile` included to assist you in building the example thesis.
 
 It is important that you specify the path to your bibliography files when declaring `hunterthesis` as the document class.
@@ -42,13 +42,14 @@ bibfile=references
 
 ### Other Considerations
 
-The `hunterthesis.cls` document class is **free software** released under the LaTeX project [public license][4].
-A copy of the LaTeX project public license is included within the repostory [`doc/LICENSE`][5].
+The `hunterthesis.cls` document class is **free software** released under the LaTeX project [public license][5].
+A copy of the LaTeX project public license is included within the repostory [`doc/LICENSE`][6].
 
 
-[0]: https://github.com/recursion-ninja/hunter-thesis-class
+[0]: https://github.com/recursion-ninja/hunter-thesis-class/blob/master/hunterthesis.cls
 [1]: http://cleanthesis.der-ric.de/
 [2]: https://github.com/derric/cleanthesis
 [3]: https://www.hunter.cuny.edu/artsci/graduate-education/guidelines-for-preparing-masters-theses-in-arts-sciences
-[4]: https://www.latex-project.org/lppl.txt
-[5]: https://github.com/recursion-ninja/hunter-thesis-class
+[4]: https://github.com/recursion-ninja/hunter-thesis-class/tree/master/example
+[5]: https://www.latex-project.org/lppl.txt
+[6]: https://github.com/recursion-ninja/hunter-thesis-class/blob/master/doc/LICENSE
