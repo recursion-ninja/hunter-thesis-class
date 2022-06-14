@@ -18,11 +18,11 @@ The `hunterthesis.cls` document class meets the following exhuastive list of gui
 
   - [X] Thesis text should be typed using a legible font such as Arial, Courier, or Times New Roman.
   - [X] All margins of both text and illustrations must be one inch.
-  - [ ] The text is to be double-spaced.
-  - [ ] Footnotes and bibliography will be single-spaced, with double spacing between notes and entries.
-  - [ ] All Pages, ... are to be typed or scanned and numbered consecutively in Arabic numerals.
-  - [ ] [Provide] an informative abstract of no more than 50 words
-  - [ ] [Provide] a list of ten keywords
+  - [X] The text is to be double-spaced.
+  - [X] Footnotes and bibliography will be single-spaced, with double spacing between notes and entries.
+  - [X] All Pages, ... are to be typed or scanned and numbered consecutively in Arabic numerals.
+  - [X] [Provide] an informative abstract of no more than 50 words
+  - [X] [Provide] a list of ten keywords
 
 
 ### Getting Started

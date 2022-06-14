@@ -30,6 +30,40 @@
 %  Shorthand reference : Prep-Guide
 %
 %  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
+%
+% The Prep-Guide specified the following order of contents (when applicable).
+%
+%   - Title Page
+%   - Dedication (optional)
+%   - Acknowledgments (optional)
+%   - Table of Contents
+%   - List of Figures
+%   - List of Tables
+%   - Title of Chapters
+%   - Appendices
+%   - References
+%
+% The Hunter CS master's thesis template patitions the listed contents into 3 segements
+%
+% The 1st segment is "Front-Matter" and contains the following contents ([X] = added):
+%
+%   - [ ] Title Page
+%   - [ ] Dedication (optional)
+%   - [ ] Acknowledgments (optional)
+%   - [ ] Abstract & Keywords
+%   - [ ] Table of Contents
+%   - [ ] List of Figures
+%   - [ ] List of Tables
+%
+% The 2nd segment is "Body-Matter" and contains the author's creative/scientific work.
+%
+% The 3rd segment is "Back-Matter" and contains the following:
+%
+%   - [ ] Appendices (optional)
+%   - [X] Glossary (optional)
+%   - [ ] References
+%
+%  -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-
 
 \LoadClass[%
 paper=A4,               % paper size
@@ -46,7 +80,8 @@ chapterprefix=false,    % do not display a prefix for chapters
 appendixprefix=false,   % but display a prefix for appendix chapter
 draft=false,            % value for draft version
 toc=flat,
-toc=numberline
+toc=numberline,
+toc=totoc
 ]{scrreprt}%
 
 \NeedsTeXFormat{LaTeX2e}
@@ -102,18 +137,19 @@ toc=numberline
 %----------------------------- Hunter Thesis variables -------------------------
 
 
+%----------------------------- Hunter Thesis document class parameters ---------
 \RequirePackage{xkeyval}
-
 % OPTION bibfile
 % --> values = file name of your bibtex file
 \define@key[ct]{hunterthesis}{bibfile}[referencez]{\def\hunterthesis@bibfile{#1} \def\@citationfile{#1}}
 \setkeys[ct]{hunterthesis}{bibfile=referencez}
 
 \ProcessOptionsX[ct]<hunterthesis>
+%----------------------------- Hunter Thesis document class parameters ---------
 
-% Use Clean Thesis formatting as the starting template
-%\usepackage[bibfile=\hunterthesis@bibfile]{cleanthesis}
-%\PassOptionsToPackage{
+
+%----------------------------- Clean Thesis as starting template ---------------
+\RequirePackage[dvipsnames,svgnames,hyperref]{xcolor}
 \PassOptionsToPackage{
 sansserif=true,
 colorize=full,
@@ -131,65 +167,90 @@ figuresep=colon,
 bibfile=\hunterthesis@bibfile
 }{cleanthesis}%
 \usepackage{cleanthesis}
-
-% Override some of Clean Thesis formatting
 \KOMAoptions{twoside=false}
-%\addtokomafont{chapter}{\sffamily}
-%\addtokomafont{chapterentry}{\sffamily}
-\KOMAoptions{toc=left}
-%  toc=listof,
-%  toc=listofnumbered,
-%  toc=noprotrusion,
-%  toc=numberline
-%}
+%----------------------------- Clean Thesis as starting template ---------------
 
 
+%----------------------------- Setup table of contents -------------------------
+\usepackage{tocbibind}
+\usepackage[english]{babel}
+\addto\captionsenglish{%
+  \renewcommand{\contentsname}{Table of Contents}%
+  \renewcommand{\bibname}{References}%
+}
 \newcommand*\tocentryformatnormal[1]{{\sffamily#1}}
 \newcommand*\tocentryformatstrong[1]{{\sffamily\bfseries#1}}
+\BeforeTOCHead[toc]{%
+  \KOMAoptions{parskip=false}% no parskip in ToC
+  \RedeclareSectionCommand[afterskip=1sp minus 1sp]{chapter}% no skip after ToC title
+}
 \RedeclareSectionCommands
   [
     tocentryformat=\tocentryformatnormal,
+    tocindent=0in,
+    tocnumwidth=0.375in,
     tocpagenumberformat=\tocentryformatnormal
   ]
   {section,subsection,subsubsection,paragraph,subparagraph}
 \RedeclareSectionCommands
   [
     tocentryformat=\tocentryformatstrong,
+    tocindent=0in,
+    tocnumwidth=0.375in,
     tocpagenumberformat=\tocentryformatnormal
   ]
   {chapter}
 
+\DeclareTOCStyleEntry[beforeskip=-0.1in]{chapter}{chapter}
+\DeclareTOCStyleEntry[beforeskip=-0.1in]{section}{section}
+\DeclareTOCStyleEntry[beforeskip=-0.1in]{default}{subsection}
+\DeclareTOCStyleEntry[beforeskip=-0.1in]{default}{subsubsection}
+%----------------------------- Setup table of contents -------------------------
 
-% Style Table of Content.
-\deftocheading{toc}{Table Of Contents}
+
+%----------------------------- Setup bibliography backreferencing --------------
+\DefineBibliographyStrings{english}{%
+    andothers = {{et\,al\adddot}}, % 'et al.' instead of 'u.a.'
+    backrefpage = {{cited on page}},%
+    backrefpages = {{cited on the pages}},%
+}
+%----------------------------- Setup bibliography backreferencing --------------
 
 
-\hypersetup{% setup the hyperref-package options
+%----------------------------- Setup hyperref-package options ------------------
+\definecolor{LinkBlue}{RGB}{24,112,176}
+\hypersetup{
     pdftitle    = {\@title},      %   - title (PDF meta)
     pdfsubject  = {\@department}, %   - subject (PDF meta)
     pdfauthor   = {\@author},     %   - author (PDF meta)
     pdfborder   = {0 0 0},        %   -
     breaklinks  = true,           %   - allow line break inside links
     colorlinks  = true,           %   - colorize links?
-    colorlinks  = true,
-    linkcolor   = blue,
-    urlcolor    = blue,
-    citecolor   = blue,
-    anchorcolor = blue
+    linkcolor   = black,
+    anchorcolor = LinkBlue,
+    citecolor   = LinkBlue,
+    urlcolor    = LinkBlue
 }
+%----------------------------- Setup hyperref-package options ------------------
 
-\DefineBibliographyStrings{english}{%
-    andothers = {{et\,al\adddot}}, % 'et al.' instead of 'u.a.'
-    backrefpage = {{quoted on page}},%
-    backrefpages = {{quoted on the pages}},%
-}
 
-\usepackage{tocbibind}
+%----------------------------- Setup glossary options --------------------------
+\usepackage[acronyms,shortcuts,toc]{glossaries}
+\setacronymstyle{long-short}
+\makenoidxglossaries
+%----------------------------- Setup glossary options --------------------------
+
+
+%----------------------------- Other packages ----------------------------------
+\usepackage{scrhack} % Must come first
+\usepackage{changepage}
 \usepackage{etoolbox}
+\usepackage[margin=1.0in]{geometry}
+\usepackage{setspace}
 \usepackage[figure,table]{totalcount}
 \usepackage[normalem]{ulem}
 \usepackage{xifthen}
-\usepackage[margin=1.0in]{geometry}
+%----------------------------- Other packages ----------------------------------
 
 
 %--------------------------------- Custom Title Page ---------------------------
@@ -201,6 +262,7 @@ bibfile=\hunterthesis@bibfile
 {\LARGE \@title}\\[0.25in]
 \normalsize by\\[0.25in]
 {\large \@author}\\[0.625in]
+\singlespacing
 Submitted in partial fulfillment\\
 of the requirements for the degree of\\
 Master of Arts in \@department, Hunter College\\
@@ -225,40 +287,50 @@ The City University of New York\\[0.625in]
     #2\clearpage
 }}
 
-\newcommand{\ThesisAbstract}{\ThesisNewPage{Abstract}{\@abstract}}
-
-
-%\newcommand{\ThesisAbstract}{\ifdefempty{\@abstract}{}{  
-%    \chapter*{Abstract}
-%    \addxcontentsline{toc}{chapter}[]{Abstract}
-%    \@abstract
-%    \clearpage
-%}}
-
-\newcommand{\ThesisDedication}{\ifdefempty{\@dedication}{}{  
-    \chapter*{Dedication}
-    \addxcontentsline{toc}{chapter}[]{Dedication}
-    \@dedication
-    \clearpage
-}}
-
-\newcommand{\ThesisAcknowledgments}{\ifdefempty{\@acknowledge}{}{
-    \chapter*{Acknowledgments}
-    \addxcontentsline{toc}{chapter}[]{Acknowledgments}
-    \@acknowledge
-    \clearpage
-}}
+\newcommand{\ThesisAbstract}{
+  \ifdefempty{\@abstract}
+  {
+    \PackageError{hunterthesis}{Abstract is empty!}
+      {Please provide your abstract with the \\abstract\{\} command. No more than 50 words permitted!}
+  }
+  {
+    \ifdefempty{\@keywords}
+    {
+      \PackageError{hunterthesis}{Keywords is empty!}
+        {Please provide your keywords with the \\keywords\{\} command. Exactly 10 keywords required!}
+    }
+    {
+      \newcommand{\AbstractPagePadding}{0.625in}
+      \chapter*{Abstract}
+      \addxcontentsline{toc}{chapter}[]{Abstract}
+      \begin{adjustwidth}{\AbstractPagePadding}{\AbstractPagePadding}
+      \@abstract
+      \end{adjustwidth}
+      \chapterheadendvskip
+      {\large \textbf{Keywords}}
+      \begin{adjustwidth}{\AbstractPagePadding}{\AbstractPagePadding}
+      \@keywords
+      \end{adjustwidth}
+      \clearpage
+    }
+  }
+}
 
 \newcommand{\ThesisTableOfContents}{\tableofcontents\clearpage}
 
 \newcommand{\ThesisListOfFigures}{\iftotalfigures\listoffigures\clearpage\fi}
 
 \newcommand{\ThesisListOfTables}{ \iftotaltables \listoftables \clearpage\fi}
-
 %--------------------------------- Front-matter Pages --------------------------
 
+
 %---------------------------------  Back-matter Pages --------------------------
-\newcommand{\ThesisBibliography}{%
+\newcommand{\ThesisAbreviations}{%
+  \printnoidxglossary[type=acronym,title={Appendix: Abreviations}]
+  \clearpage
+}
+
+\newcommand{\ThesisReferences}{%
   {%
     \setstretch{1.1}
     \renewcommand{\bibfont}{\normalfont\small}
@@ -271,86 +343,37 @@ The City University of New York\\[0.625in]
 %---------------------------------  Back-matter Pages --------------------------
 
 
+%--------------------------------- Exported Commands ---------------------------
+\newcommand{\DefineAbreviation}[2]{\newacronym{#1}{#1}{#2}}
 
+\newcommand{\Abrev}[1]{\gls{#1}}
 
-
-
-
-
-
-% The Prep-Guide specified the following order of contents (when applicable).
-%
-%   - Title Page
-%   - Dedication (optional)
-%   - Acknowledgments (optional)
-%   - Table of Contents
-%   - List of Figures
-%   - List of Tables
-%   - Title of Chapters
-%   - Appendices
-%   - References
-%
-% The Hunter CS master's thesis template patitions the listed contents into 3 segements
-%
-% The 1st segment is "Front-Matter" and contains the following contents ([X] = added):
-%
-%   - [ ] Title Page
-%   - [ ] Dedication (optional)
-%   - [ ] Acknowledgments (optional)
-%   - [X] Abstract (optional)
-%   - [ ] Table of Contents
-%   - [ ] List of Figures
-%   - [ ] List of Tables
-%
-% The 2nd segment is "Body-Matter" and contains the author's creative/scientific work.
-%
-% The 3rd segment is "Back-Matter" and contains the following:
-%
-%   - [ ] Appendices (optional)
-%   - [X] Glossary (optional)
-%   - [ ] References
-%
 
 \newcommand{\ThesisFrontmatter}{%
-%------------------------------------- Title Page -----------------------------
+% Always use Arabic numbering, even in Front-matter
+\setcounter{page}{1}
+\pagenumbering{arabic}
+
 \ThesisTitlePage
-%------------------------------------- Title Page -----------------------------
 
-% Roman numerals for page counter in "Front-matter," after title page
-\setcounter{page}{1}
-\renewcommand{\thepage}{\roman{page}}
+% Always use *double* spacing outside of Back-matter
+\doublespacing
 
-%------------------------------------- Dedication -----------------------------
+% Other Front-matter pages
 \ThesisNewPage{Dedication}{\@dedication}
-%------------------------------------- Dedication -----------------------------
-
-%------------------------------------- Acknowledgments ------------------------
 \ThesisNewPage{Acknowledgments}{\@acknowledge}
-%------------------------------------- Acknowledgments ------------------------
-
-%------------------------------------- Abstract -------------------------------
-\ThesisNewPage{Abstract}{\@abstract}
-%------------------------------------- Abstract -------------------------------
-
-%------------------------------------- ToC ------------------------------------
+\ThesisAbstract
 \ThesisTableOfContents
-%------------------------------------- ToC ------------------------------------
-
-%------------------------------------- LoF ------------------------------------
 \ThesisListOfFigures
-%------------------------------------- LoF ------------------------------------
-
-%------------------------------------- LoT ------------------------------------
 \ThesisListOfTables
-%------------------------------------- LoT ------------------------------------
-
-% Arabic numerals for page counter after "Front-matter"
-\clearpage
-\setcounter{page}{1}
-\renewcommand{\thepage}{\arabic{page}}
 }
+
 
 \newcommand{\ThesisBackmatter}{%
 \clearpage
-\ThesisBibliography
+% Always use *single* spacing within Back-matter
+\singlespacing
+
+\ThesisAbreviations
+\ThesisReferences
 }
