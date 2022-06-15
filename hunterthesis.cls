@@ -69,7 +69,7 @@
 paper=A4,               % paper size
 parskip=half,           % spacing value / method for paragraphs
 chapterprefix=true,     % prefix for chapter marks
-12pt,                   % font size
+11pt,                   % font size
 headings=normal,        % size of headings
 bibliography=totoc,     % include bib in toc
 listof=totoc,           % include listof entries in toc
@@ -151,6 +151,7 @@ toc=totoc
 %----------------------------- Clean Thesis as starting template ---------------
 \RequirePackage[dvipsnames,svgnames,hyperref]{xcolor}
 \PassOptionsToPackage{
+fontsize=11pt,
 sansserif=true,
 colorize=full,
 colortheme=bluemagenta,
@@ -188,7 +189,7 @@ bibfile=\hunterthesis@bibfile
   [
     tocentryformat=\tocentryformatnormal,
     tocindent=0in,
-    tocnumwidth=0.375in,
+    tocnumwidth=0.45in,
     tocpagenumberformat=\tocentryformatnormal
   ]
   {section,subsection,subsubsection,paragraph,subparagraph}
@@ -243,13 +244,16 @@ bibfile=\hunterthesis@bibfile
 
 %----------------------------- Other packages ----------------------------------
 \usepackage{scrhack} % Must come first
+\usepackage{amsmath}
 \usepackage{changepage}
 \usepackage{etoolbox}
 \usepackage[margin=1.0in]{geometry}
+\usepackage{latexsym}
 \usepackage{setspace}
 \usepackage[figure,table]{totalcount}
 \usepackage[normalem]{ulem}
 \usepackage{xifthen}
+
 %----------------------------- Other packages ----------------------------------
 
 
@@ -257,22 +261,29 @@ bibfile=\hunterthesis@bibfile
 \renewcommand{\maketitle}{
 \thispagestyle{empty}
 \parindent=0pt
+\KOMAoptions{fontsize=12pt}
 \begin{center}
-~\vfill
-{\LARGE \@title}\\[0.25in]
-\normalsize by\\[0.25in]
-{\large \@author}\\[0.625in]
 \singlespacing
+~\vfill
+\Huge\@title\normalsize
+\\[0.25in]
+by
+\\[0.25in]
+\Large\@author\normalsize
+\\[0.625in]
 Submitted in partial fulfillment\\
 of the requirements for the degree of\\
 Master of Arts in \@department, Hunter College\\
-The City University of New York\\[0.625in]
-\@year\\[1.6875in]
-\uline{\makebox[2.5in][l]{\@date}} \hfill \uline{\makebox[2.5in][l]{\@advisor}}\\[0.0625in]
-\makebox[2.5in][l]{Date} \hfill \makebox[2.5in][l]{Thesis Sponsor}\\[1.1875in]
-\uline{\makebox[2.5in][l]{\@date}} \hfill \uline{\makebox[2.5in][l]{\@reader}}\\[0.0625in]
-\makebox[2.5in][l]{Date} \hfill \makebox[2.5in][l]{Second Reader}
+The City University of New York
+\\[0.625in]
+\@year
+\\[1.6875in]
+\uline{\makebox[2.5in][l]{~~~\@date}} \hfill \uline{\makebox[2.5in][l]{~~~\@advisor}}    \\[0.0625in]
+       \makebox[2.5in][l]{~~~Date}    \hfill        \makebox[2.5in][l]{~~~Thesis Sponsor}\\[1.1875in]
+\uline{\makebox[2.5in][l]{~~~\@date}} \hfill \uline{\makebox[2.5in][l]{~~~\@reader}}     \\[0.0625in]
+       \makebox[2.5in][l]{~~~Date}    \hfill        \makebox[2.5in][l]{~~~Second Reader}
 \end{center}
+\KOMAoptions{fontsize=11pt}
 \pagebreak
 }
 
