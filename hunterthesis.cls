@@ -74,6 +74,7 @@ headings=normal,        % size of headings
 bibliography=totoc,     % include bib in toc
 listof=totoc,           % include listof entries in toc
 listof=numberline,      % include listof entries in toc
+listof=nochaptergap,
 titlepage=on,           % own page for each title page
 captions=tablebelow,    % display table captions above the float env
 chapterprefix=false,    % do not display a prefix for chapters
@@ -103,7 +104,7 @@ toc=totoc
 \global\let\@reader\@empty
 \global\let\@thanks\@empty
 \global\let\@title\@empty
-\global\let\@year\@empty
+\global\let\@annum\@empty
 
 \global\let\abstract\relax
 \global\let\advisor\relax
@@ -118,7 +119,7 @@ toc=totoc
 \global\let\reader\relax
 \global\let\thanks\relax
 \global\let\title\relax
-\global\let\year\relax
+\global\let\annum\relax
 
 \def \abstract#1{\def\@abstract{#1}}
 \def \advisor#1{\def\@advisor{#1}}
@@ -133,7 +134,7 @@ toc=totoc
 \def \reader#1{\def\@reader{#1}}
 \def \thanks#1{\def\@thanks{#1}}
 \def \title#1{\def\@title{#1}}
-\def \year#1{\def\@year{#1}}
+\def \annum#1{\def\@annum{#1}}
 %----------------------------- Hunter Thesis variables -------------------------
 
 
@@ -236,7 +237,7 @@ bibfile=\hunterthesis@bibfile
 
 
 %----------------------------- Setup glossary options --------------------------
-\usepackage[acronyms,shortcuts,toc]{glossaries}
+\usepackage[acronyms,shortcuts,toc,section=chapter,numberedsection=autolabel]{glossaries}
 \setacronymstyle{long-short}
 \makenoidxglossaries
 %----------------------------- Setup glossary options --------------------------
@@ -249,6 +250,7 @@ bibfile=\hunterthesis@bibfile
 \usepackage{etoolbox}
 \usepackage[margin=1.0in]{geometry}
 \usepackage{latexsym}
+\usepackage{lmodern}
 \usepackage{setspace}
 \usepackage[figure,table]{totalcount}
 \usepackage[normalem]{ulem}
@@ -276,7 +278,7 @@ of the requirements for the degree of\\
 Master of Arts in \@department, Hunter College\\
 The City University of New York
 \\[0.625in]
-\@year
+\@annum
 \\[1.6875in]
 \uline{\makebox[2.5in][l]{~~~\@date}} \hfill \uline{\makebox[2.5in][l]{~~~\@advisor}}    \\[0.0625in]
        \makebox[2.5in][l]{~~~Date}    \hfill        \makebox[2.5in][l]{~~~Thesis Sponsor}\\[1.1875in]
@@ -355,7 +357,7 @@ The City University of New York
 
 
 %--------------------------------- Exported Commands ---------------------------
-\newcommand{\DefineAbreviation}[2]{\newacronym{#1}{#1}{#2}}
+\newcommand{\DefineAbbreviation}[2]{\newacronym{#1}{#1}{#2}}
 
 \newcommand{\Abrev}[1]{\gls{#1}}
 
@@ -380,11 +382,14 @@ The City University of New York
 }
 
 
-\newcommand{\ThesisBackmatter}{%
+\newenvironment{ThesisBackmatter}%
+{%
 \clearpage
 % Always use *single* spacing within Back-matter
 \singlespacing
-
+\appendix
 \ThesisAbreviations
+}%
+{%
 \ThesisReferences
-}
+}%
