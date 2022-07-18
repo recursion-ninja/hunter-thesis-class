@@ -7,6 +7,11 @@ Hunter Thesis uses [Semantic Versioning (v2.0.0)][1].
 The changelog is available [on GitHub][2].
 
 
+## 0.3.0 *2022-07-18*
+
+  * Ensuring footer is correctly displayed on thesis pages.
+
+
 ## 0.2.0 *2022-06-14*
 
   * Ensuring text is double-spaced within "front-matter" and "main-matter."

@@ -152,7 +152,6 @@ toc=totoc
 %----------------------------- Clean Thesis as starting template ---------------
 \RequirePackage[dvipsnames,svgnames,hyperref]{xcolor}
 \PassOptionsToPackage{
-fontsize=11pt,
 sansserif=true,
 colorize=full,
 colortheme=bluemagenta,
@@ -243,12 +242,24 @@ bibfile=\hunterthesis@bibfile
 %----------------------------- Setup glossary options --------------------------
 
 
+%----------------------------- Modify paragraph format -------------------------
+\newlength\savedparfillskip
+\newcommand*{\saveparfillskip}[1]{\setlength{\savedparfillskip}{\dimexpr\parfillskip\relax}}
+\AddtoDoHook{heading/postinit/chapter}{\saveparfillskip}
+\renewcommand{\chapterlinesformat}[3]{%
+    \ctchaptertitle{#3}%
+    #2%
+    \hspace{-\savedparfillskip}%
+}
+%----------------------------- Modify paragraph format -------------------------
+
+
 %----------------------------- Other packages ----------------------------------
 \usepackage{scrhack} % Must come first
 \usepackage{amsmath}
 \usepackage{changepage}
 \usepackage{etoolbox}
-\usepackage[margin=1.0in]{geometry}
+\usepackage[margin=1.0in,bottom=1.25in]{geometry}
 \usepackage{latexsym}
 \usepackage{lmodern}
 \usepackage{setspace}
