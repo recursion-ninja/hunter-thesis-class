@@ -163,7 +163,7 @@ hangsubsection=false,
 configurebiblatex=true,
 bibsys=biber,
 bibstyle=ieee-alphabetic,
-bibsorting=nyt,
+bibsorting=anyt,
 figuresep=colon,
 bibfile=\hunterthesis@bibfile
 }{cleanthesis}%
